@@ -1,3 +1,4 @@
+echo "НЕ ЗАКРЫВАЙТЕ ЭТО ОКНО, ОНО ЗАКРОЕТСЯ ПО ОКОНЧАНИЮ УСТАНОВКИ"
 echo off
 .\postgresql-14.6-1-windows-x64 --mode unattended --unattendedmodeui minimal --superpassword masterkey
 set PGPASSWORD=masterkey
