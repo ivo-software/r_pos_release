@@ -1,3 +1,3 @@
-set LATEST_APP_VERSION=0.19.0
+set LATEST_APP_VERSION=0.20.0
 "C:\Program Files (x86)\NSIS\makensis.exe" /DOUTPUT_NAME="installer/chayxanshik_server_setup_${LATEST_VERSION}.exe" /DLATEST_VERSION=%LATEST_APP_VERSION% /DINCLUDE_SQL=0 installer.nsi 
 "C:\Program Files (x86)\NSIS\makensis.exe" /DOUTPUT_NAME="installer/chayxanshik_server_setup_${LATEST_VERSION}_with_PgSQL.exe" /DLATEST_VERSION=%LATEST_APP_VERSION% /DINCLUDE_SQL=1 installer.nsi 
