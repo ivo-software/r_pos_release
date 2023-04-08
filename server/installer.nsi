@@ -20,6 +20,7 @@ Section
     IfFileExists "${INSTALL_DIRECTORY}\chayxanshik.exe" 0
         delete "${INSTALL_DIRECTORY}\chayxanshik.exe"
 
+    File "truncate_operations.sql"
     File "nssm.exe"
     File "chayxanshik_${LATEST_VERSION}.exe" 
     Rename "${INSTALL_DIRECTORY}\chayxanshik_${LATEST_VERSION}.exe" "${INSTALL_DIRECTORY}\chayxanshik.exe"
@@ -34,6 +35,7 @@ SectionEnd
 
 !if ${INCLUDE_SQL} = 1
     Section 
+        MessageBox MB_YESNO "Do you want to install PostgreSQL?" /SD IDNO IDNO +6        
         File "postgresql-14.6-1-windows-x64.exe"
         ExecWait '"${INSTALL_DIRECTORY}\postgresql-14.6-1-windows-x64.exe" --mode unattended --unattendedmodeui minimal --superpassword masterkey'
         Sleep 15000
