@@ -10,6 +10,8 @@ Icon "icon.ico"
 OutFile "${OUTPUT_NAME}"
 
 Section
+    MessageBox MB_YESNO "Do you want to install Chayxanshik API Server?" IDYES +2 IDNO +1
+    Quit
     SetOutPath "${INSTALL_DIRECTORY}"
 
     ;create the installation directory
