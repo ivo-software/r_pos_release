@@ -6,6 +6,9 @@ TRUNCATE TABLE receipt_receiptpayment CASCADE;
 TRUNCATE TABLE receipt_order CASCADE;
 TRUNCATE TABLE receipt_receipt CASCADE;
 
+/* Смены */
+TRUNCATE TABLE system_shift CASCADE;
+
 /* Склад */
 TRUNCATE TABLE warehouse_purchase CASCADE;
 TRUNCATE TABLE warehouse_purchaseline CASCADE;
@@ -16,5 +19,6 @@ TRUNCATE TABLE warehouse_entryline CASCADE;
 TRUNCATE TABLE warehouse_writeoff CASCADE;
 TRUNCATE TABLE warehouse_writeoffline CASCADE;
 TRUNCATE TABLE warehouse_consumption CASCADE;
+TRUNCATE TABLE warehouse_production CASCADE;
 
 SET session_replication_role = DEFAULT;
