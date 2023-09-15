@@ -20,5 +20,6 @@ TRUNCATE TABLE warehouse_writeoff CASCADE;
 TRUNCATE TABLE warehouse_writeoffline CASCADE;
 TRUNCATE TABLE warehouse_consumption CASCADE;
 TRUNCATE TABLE warehouse_production CASCADE;
+TRUNCATE TABLE warehouse_ingredientcostchange CASCADE;
 
 SET session_replication_role = DEFAULT;
