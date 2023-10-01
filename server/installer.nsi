@@ -24,9 +24,19 @@ Section
 
     File "truncate_operations.sql"
     File "nssm.exe"
-    File ".env"
     File "r_pos_api_${LATEST_VERSION}.exe" 
     Rename "${INSTALL_DIRECTORY}\r_pos_api_${LATEST_VERSION}.exe" "${INSTALL_DIRECTORY}\r_pos_api.exe"
+
+    IfFileExists "${INSTALL_DIRECTORY}\.env" FileExists FileDoesNotExist
+
+    FileExists:
+        ; The file exists, so do nothing or handle it as needed
+        Goto End
+
+    FileDoesNotExist:
+        File ".env"
+
+    End:
 
     ExecWait '"${INSTALL_DIRECTORY}\nssm.exe" stop "R POS API Server"'
     ExecWait '"${INSTALL_DIRECTORY}\nssm.exe" remove "R POS API Server" confirm'
