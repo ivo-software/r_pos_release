@@ -29,6 +29,9 @@ set "today=%today:.=%"
 set "zipfile=bundle\r_pos_bundle_%today%.zip"
 set "zipfile_large=bundle\r_pos_bundle_%today%_PgSQL_server.zip"
 
+copy "%waiter_app%" "waiter_app\r_pos_waiter.latest.apk"
+copy "%q_monitor_app%" "q_monitor_app\r_pos_q_monitor_app.latest.apk"
+
 powershell -command "Compress-Archive -Path '%api_server%', '%ui_client%', '%waiter_app%', '%q_monitor_app%'  -DestinationPath '%zipfile%'"
 powershell -command "Compress-Archive -Path '%api_server_with_pgsql%' -DestinationPath '%zipfile_large%'"
 
