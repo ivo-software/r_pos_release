@@ -1,6 +1,6 @@
 @echo off
-set API_VERSION=1.21.2
-set UI_VERSION=1.20.1
+set API_VERSION=1.22.0
+set UI_VERSION=1.22.0
 set WAITER_APP_VERSION=1.12.0(26)
 set Q_MONITOR_APP_VERSION=1.1.1(35)
 "C:\Program Files (x86)\NSIS\makensis.exe" /DOUTPUT_NAME="installer/r_pos_api_update_${LATEST_VERSION}.exe" /DLATEST_VERSION=%API_VERSION% /DINCLUDE_SQL=0 server\installer.nsi 
