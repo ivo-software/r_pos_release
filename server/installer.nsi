@@ -19,6 +19,9 @@ Section
 
     ExecWait 'net stop "R POS API Server"'
     Sleep 5000
+    IfFileExists "${INSTALL_DIRECTORY}\truncate_operations.sql" 0
+        delete "${INSTALL_DIRECTORY}\truncate_operations.sql"
+        
     IfFileExists "${INSTALL_DIRECTORY}\r_pos_api.exe" 0
         delete "${INSTALL_DIRECTORY}\r_pos_api.exe"
 

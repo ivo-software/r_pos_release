@@ -6,6 +6,9 @@ TRUNCATE TABLE receipt_receiptpayment CASCADE;
 TRUNCATE TABLE receipt_order CASCADE;
 TRUNCATE TABLE receipt_receipt CASCADE;
 
+/* Платежи */
+TRUNCATE TABLE finance_accountpayment CASCADE;
+
 /* Смены */
 TRUNCATE TABLE system_shift CASCADE;
 
