@@ -1,6 +1,6 @@
 @echo off
-set API_VERSION=1.25.0
-set UI_VERSION=1.25.1
+set API_VERSION=1.25.1
+set UI_VERSION=1.25.2
 set WAITER_APP_VERSION=1.12.0(26)
 set Q_MONITOR_APP_VERSION=1.1.1(35)
 "C:\Program Files (x86)\NSIS\makensis.exe" /DOUTPUT_NAME="installer/r_pos_api_update_${LATEST_VERSION}.exe" /DLATEST_VERSION=%API_VERSION% /DINCLUDE_SQL=0 server\installer.nsi 
@@ -26,21 +26,27 @@ set "today=%day%.%month%.%year%"
 set "today=%today:.=%"
 
 
-set "zipfile=bundle\r_pos_bundle_%today%.zip"
-set "zipfile_large=bundle\r_pos_bundle_%today%_PgSQL_server.zip"
+set "zipfile_update_server=bundle\r_pos_update_server_%today%.zip"
+set "zipfile_update_client=bundle\r_pos_update_client_%today%.zip"
+set "zipfile_apps=bundle\r_pos_apps_%today%.zip"
+set "zipfile_full_setup=bundle\r_pos_full_setup_%today%_PgSQL_server.zip"
 
 copy "%waiter_app%" "waiter_app\r_pos_waiter.latest.apk"
 copy "%q_monitor_app%" "q_monitor_app\r_pos_q_monitor_app.latest.apk"
 
-powershell -command "Compress-Archive -Path '%api_server%', '%ui_client%', '%waiter_app%', '%q_monitor_app%'  -DestinationPath '%zipfile%'"
-powershell -command "Compress-Archive -Path '%api_server_with_pgsql%', '%ui_client%' -DestinationPath '%zipfile_large%'"
+powershell -command "Compress-Archive -Path '%api_server%'  -DestinationPath '%zipfile_update_server%'"
+powershell -command "Compress-Archive -Path '%ui_client%'  -DestinationPath '%zipfile_update_client%'"
+powershell -command "Compress-Archive -Path '%waiter_app%', '%q_monitor_app%'  -DestinationPath '%zipfile_apps%'"
+powershell -command "Compress-Archive -Path '%api_server_with_pgsql%' -DestinationPath '%zipfile_full_setup%'"
 
 if errorlevel 1 (
     echo Error occurred while creating the zip file.
     exit /b 1
 ) else (
-    echo Zip file "%zipfile%" created successfully.
-    echo Zip file "%zipfile_large%" created successfully.
+    echo Zip file "%zipfile_update_server%" created successfully.
+    echo Zip file "%zipfile_update_client%" created successfully.
+    echo Zip file "%zipfile_apps%" created successfully.
+    echo Zip file "%zipfile_full_setup%" created successfully.
 )
 
 endlocal
