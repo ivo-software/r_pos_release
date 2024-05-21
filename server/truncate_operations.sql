@@ -1,3 +1,4 @@
+SET client_encoding TO 'UTF8';
 SET session_replication_role = replica;
 
 /* Чеки */
@@ -24,5 +25,11 @@ TRUNCATE TABLE warehouse_writeoffline CASCADE;
 TRUNCATE TABLE warehouse_consumption CASCADE;
 TRUNCATE TABLE warehouse_production CASCADE;
 TRUNCATE TABLE warehouse_ingredientcostchange CASCADE;
+
+/* Монитор очереди */
+TRUNCATE TABLE receipt_qmonitororder CASCADE;
+
+/* Сообщения телеграм */
+TRUNCATE TABLE system_tgmessage CASCADE;
 
 SET session_replication_role = DEFAULT;

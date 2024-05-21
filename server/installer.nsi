@@ -21,11 +21,19 @@ Section
     Sleep 5000
     IfFileExists "${INSTALL_DIRECTORY}\truncate_operations.sql" 0
         delete "${INSTALL_DIRECTORY}\truncate_operations.sql"
+
+    IfFileExists "${INSTALL_DIRECTORY}\reset_license.bat" 0
+        delete "${INSTALL_DIRECTORY}\reset_license.bat"
+
+    IfFileExists "${INSTALL_DIRECTORY}\truncate_db.bat" 0
+        delete "${INSTALL_DIRECTORY}\truncate_db.bat"
         
     IfFileExists "${INSTALL_DIRECTORY}\r_pos_api.exe" 0
         delete "${INSTALL_DIRECTORY}\r_pos_api.exe"
 
     File "truncate_operations.sql"
+    File "truncate_db.bat"
+    File "reset_license.bat"
     File "nssm.exe"
     File "r_pos_api_${LATEST_VERSION}.exe" 
     Rename "${INSTALL_DIRECTORY}\r_pos_api_${LATEST_VERSION}.exe" "${INSTALL_DIRECTORY}\r_pos_api.exe"
