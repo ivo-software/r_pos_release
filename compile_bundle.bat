@@ -1,6 +1,6 @@
 @echo off
-set API_VERSION=1.30.0
-set UI_VERSION=1.30.0
+set API_VERSION=1.32.0
+set UI_VERSION=1.32.0
 set WAITER_APP_VERSION=1.12.0(26)
 set Q_MONITOR_APP_VERSION=1.1.1(35)
 "C:\Program Files (x86)\NSIS\makensis.exe" /DOUTPUT_NAME="installer/r_pos_api_update_${LATEST_VERSION}.exe" /DLATEST_VERSION=%API_VERSION% /DINCLUDE_SQL=0 server\installer.nsi 
@@ -26,10 +26,10 @@ set "today=%day%.%month%.%year%"
 set "today=%today:.=%"
 
 
-set "zipfile_update_server=bundle\r_pos_update_server_%today%.zip"
-set "zipfile_update_client=bundle\r_pos_update_client_%today%.zip"
+set "zipfile_update_server=bundle\r_pos_update_server_%API_VERSION%.zip"
+set "zipfile_update_client=bundle\r_pos_update_client_%UI_VERSION%.zip"
+set "zipfile_full_setup=bundle\r_pos_full_setup_%API_VERSION%_PgSQL_server.zip"
 set "zipfile_apps=bundle\r_pos_apps_%today%.zip"
-set "zipfile_full_setup=bundle\r_pos_full_setup_%today%_PgSQL_server.zip"
 
 copy "%waiter_app%" "waiter_app\r_pos_waiter.latest.apk"
 copy "%q_monitor_app%" "q_monitor_app\r_pos_q_monitor_app.latest.apk"
