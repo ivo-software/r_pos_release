@@ -1,9 +1,9 @@
 @echo off
-set API_VERSION=1.32.0
-set UI_VERSION=1.32.1
+set API_VERSION=1.102.0
+set UI_VERSION=1.33.0
 set WAITER_APP_VERSION=1.13.0(27)
 set Q_MONITOR_APP_VERSION=1.1.1(35)
-"C:\Program Files (x86)\NSIS\makensis.exe" /DOUTPUT_NAME="installer/r_pos_api_update_${LATEST_VERSION}.exe" /DLATEST_VERSION=%API_VERSION% /DINCLUDE_SQL=0 server\installer.nsi 
+"C:\Program Files (x86)\NSIS\makensis.exe" /DOUTPUT_NAME="installer/r_pos_api_${LATEST_VERSION}.exe" /DLATEST_VERSION=%API_VERSION% /DINCLUDE_SQL=0 server\installer.nsi 
 "C:\Program Files (x86)\NSIS\makensis.exe" /DOUTPUT_NAME="installer/r_pos_api_${LATEST_VERSION}_PgSQL_server.exe" /DLATEST_VERSION=%API_VERSION% /DINCLUDE_SQL=1 server\installer.nsi 
 
 setlocal enabledelayedexpansion
@@ -11,7 +11,7 @@ setlocal enabledelayedexpansion
 rmdir /s /q "bundle"
 mkdir "bundle"
 
-set "api_server=server\installer\r_pos_api_update_%API_VERSION%.exe"
+set "api_server=server\installer\r_pos_api_%API_VERSION%.exe"
 set "ui_client=client\R POS Setup %UI_VERSION%.exe"
 set "waiter_app=waiter_app\r_pos_waiter_%WAITER_APP_VERSION%.apk"
 set "q_monitor_app=q_monitor_app\r_pos_q_monitor_app_%Q_MONITOR_APP_VERSION%.apk"
@@ -26,9 +26,9 @@ set "today=%day%.%month%.%year%"
 set "today=%today:.=%"
 
 
-set "zipfile_update_server=bundle\r_pos_update_server_%API_VERSION%.zip"
-set "zipfile_update_client=bundle\r_pos_update_client_%UI_VERSION%.zip"
-set "zipfile_full_setup=bundle\r_pos_full_setup_%API_VERSION%_PgSQL_server.zip"
+set "zipfile_update_server=bundle\r_pos_server_%API_VERSION%.zip"
+set "zipfile_update_client=bundle\r_pos_client_%UI_VERSION%.zip"
+set "zipfile_full_setup=bundle\r_pos_server_%API_VERSION%_PgSQL_server.zip"
 set "zipfile_apps=bundle\r_pos_apps_%today%.zip"
 
 copy "%waiter_app%" "waiter_app\r_pos_waiter.latest.apk"
