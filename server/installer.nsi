@@ -14,11 +14,13 @@ Section
     Quit
     SetOutPath "${INSTALL_DIRECTORY}"
 
-    ;create the installation directory
+    ; Create the installation directory
     CreateDirectory "${INSTALL_DIRECTORY}"
 
     ExecWait 'net stop "R POS API Server"'
     Sleep 5000
+
+    ; Delete existing files if they exist
     IfFileExists "${INSTALL_DIRECTORY}\truncate_operations.sql" 0
         delete "${INSTALL_DIRECTORY}\truncate_operations.sql"
 
@@ -31,6 +33,7 @@ Section
     IfFileExists "${INSTALL_DIRECTORY}\r_pos_api.exe" 0
         delete "${INSTALL_DIRECTORY}\r_pos_api.exe"
 
+    ; Copy new files
     File "truncate_operations.sql"
     File "truncate_db.bat"
     File "reset_license.bat"
@@ -38,6 +41,7 @@ Section
     File "r_pos_api_${LATEST_VERSION}.exe" 
     Rename "${INSTALL_DIRECTORY}\r_pos_api_${LATEST_VERSION}.exe" "${INSTALL_DIRECTORY}\r_pos_api.exe"
 
+    ; Check if .env file exists
     IfFileExists "${INSTALL_DIRECTORY}\.env" FileExists FileDoesNotExist
 
     FileExists:
@@ -49,6 +53,16 @@ Section
 
     End:
 
+    ; Create the 'media' directory if it doesn't exist
+    IfFileExists "${INSTALL_DIRECTORY}\media\" 0 CreateMediaDirectory
+    Goto MediaDirectoryExists
+
+    CreateMediaDirectory:
+        CreateDirectory "${INSTALL_DIRECTORY}\media"
+    
+    MediaDirectoryExists:
+
+    ; Set up the service with nssm
     ExecWait '"${INSTALL_DIRECTORY}\nssm.exe" stop "R POS API Server"'
     ExecWait '"${INSTALL_DIRECTORY}\nssm.exe" remove "R POS API Server" confirm'
     ExecWait '"${INSTALL_DIRECTORY}\nssm.exe" install "R POS API Server" "${INSTALL_DIRECTORY}\r_pos_api.exe"'
@@ -64,7 +78,7 @@ SectionEnd
         ExecWait '"${INSTALL_DIRECTORY}\postgresql-14.12-2-windows-x64.exe" --mode unattended --unattendedmodeui minimal --superpassword masterkey'
         Sleep 15000
         System::Call 'Kernel32::SetEnvironmentVariable(t, t)i ("PGPASSWORD", "masterkey").r0'
-        ExecWait '"C:\Program Files\PostgreSQL\14\bin\psql.exe" -U postgres -c "CREATE DATABASE r_pos;'
+        ExecWait '"C:\Program Files\PostgreSQL\14\bin\psql.exe" -U postgres -c "CREATE DATABASE r_pos;"'
         Sleep 5000
     SectionEnd
 !endif
