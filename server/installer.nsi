@@ -38,6 +38,7 @@ Section
     File "truncate_db.bat"
     File "reset_license.bat"
     File "nssm.exe"
+    File "uninstall_r_pos_service.bat" 
     File "r_pos_api_${LATEST_VERSION}.exe" 
     Rename "${INSTALL_DIRECTORY}\r_pos_api_${LATEST_VERSION}.exe" "${INSTALL_DIRECTORY}\r_pos_api.exe"
 
@@ -73,12 +74,18 @@ SectionEnd
 
 !if ${INCLUDE_SQL} = 1
     Section 
-        MessageBox MB_YESNO "Do you want to install PostgreSQL?" /SD IDNO IDNO +6        
+        MessageBox MB_YESNO "Do you want to install PostgreSQL?" /SD IDYES IDNO +6        
         File "postgresql-14.12-2-windows-x64.exe"
         ExecWait '"${INSTALL_DIRECTORY}\postgresql-14.12-2-windows-x64.exe" --mode unattended --unattendedmodeui minimal --superpassword masterkey'
         Sleep 15000
         System::Call 'Kernel32::SetEnvironmentVariable(t, t)i ("PGPASSWORD", "masterkey").r0'
         ExecWait '"C:\Program Files\PostgreSQL\14\bin\psql.exe" -U postgres -c "CREATE DATABASE r_pos;"'
+        MessageBox MB_YESNO "Do you want to install Redis Server?" /SD IDYES IDNO +6   
+        CreateDirectory "${INSTALL_DIRECTORY}\redis-7.4.1"
+        SetOutPath "${INSTALL_DIRECTORY}\redis-7.4.1"
+        File /r "redis-7.4.1\*"
+        ExecWait 'sc.exe create "RedisServer" binpath="${INSTALL_DIRECTORY}\redis-7.4.1\RedisService.exe" start=AUTO'
+        ExecWait 'net start "RedisServer"'
         Sleep 5000
     SectionEnd
 !endif

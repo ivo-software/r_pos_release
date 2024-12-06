@@ -1,10 +1,10 @@
 @echo off
-set API_VERSION=1.107.2
+set API_VERSION=1.108.0
 set UI_VERSION=1.39.0
 set WAITER_APP_VERSION=1.13.0(27)
 set Q_MONITOR_APP_VERSION=1.1.1(35)
-"C:\Program Files (x86)\NSIS\makensis.exe" /DOUTPUT_NAME="installer/r_pos_api_${LATEST_VERSION}.exe" /DLATEST_VERSION=%API_VERSION% /DINCLUDE_SQL=0 server\installer.nsi 
-"C:\Program Files (x86)\NSIS\makensis.exe" /DOUTPUT_NAME="installer/r_pos_api_${LATEST_VERSION}_PgSQL_server.exe" /DLATEST_VERSION=%API_VERSION% /DINCLUDE_SQL=1 server\installer.nsi 
+".\server\NSIS\makensis.exe" /DOUTPUT_NAME="installer/r_pos_api_${LATEST_VERSION}.exe" /DLATEST_VERSION=%API_VERSION% /DINCLUDE_SQL=0 server\installer.nsi 
+".\server\NSIS\makensis.exe" /DOUTPUT_NAME="installer/r_pos_api_${LATEST_VERSION}_PgSQL_server.exe" /DLATEST_VERSION=%API_VERSION% /DINCLUDE_SQL=1 server\installer.nsi 
 
 setlocal enabledelayedexpansion
 
