@@ -66,10 +66,14 @@ Section
     ; Set up the service with nssm
     ExecWait '"${INSTALL_DIRECTORY}\nssm.exe" stop "R POS API Server"'
     ExecWait '"${INSTALL_DIRECTORY}\nssm.exe" remove "R POS API Server" confirm'
+    ExecWait 'net stop "RedisServer"'
     ExecWait '"${INSTALL_DIRECTORY}\nssm.exe" install "R POS API Server" "${INSTALL_DIRECTORY}\r_pos_api.exe"'
     ExecWait '"${INSTALL_DIRECTORY}\nssm.exe" set "R POS API Server" AppDirectory "${INSTALL_DIRECTORY}"'
     ExecWait '"${INSTALL_DIRECTORY}\nssm.exe" set "R POS API Server" AppStdout "${INSTALL_DIRECTORY}\r_pos_api.log"'
     ExecWait '"${INSTALL_DIRECTORY}\nssm.exe" set "R POS API Server" AppStderr "${INSTALL_DIRECTORY}\r_pos_api.log"'
+    ExecWait 'net start "RedisServer"'
+
+
 SectionEnd
 
 !if ${INCLUDE_SQL} = 1
@@ -81,6 +85,8 @@ SectionEnd
         System::Call 'Kernel32::SetEnvironmentVariable(t, t)i ("PGPASSWORD", "masterkey").r0'
         ExecWait '"C:\Program Files\PostgreSQL\14\bin\psql.exe" -U postgres -c "CREATE DATABASE r_pos;"'
         MessageBox MB_YESNO "Do you want to install Redis Server?" /SD IDYES IDNO +6   
+        ExecWait 'sc.exe stop "RedisServer"'
+        ExecWait 'sc.exe delete "RedisServer"'
         CreateDirectory "${INSTALL_DIRECTORY}\redis-7.4.1"
         SetOutPath "${INSTALL_DIRECTORY}\redis-7.4.1"
         File /r "redis-7.4.1\*"
